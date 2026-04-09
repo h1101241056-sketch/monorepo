@@ -5,17 +5,16 @@ WORKDIR /app
 COPY package.json bun.lock ./
 COPY apps/backend/package.json ./apps/backend/
 COPY packages/shared/package.json ./packages/shared/
-COPY apps/backend/prisma ./apps/backend/prisma
 
+# Install dependencies
 RUN bun install
 
-# Copy source
+# Copy source SEMUA sekaligus setelah install
 COPY apps/backend ./apps/backend
 COPY packages/shared ./packages/shared
 
+# Generate Prisma client (prisma/schema.prisma sudah ada)
 WORKDIR /app/apps/backend
-
-# Generate Prisma client
 RUN bunx prisma generate
 
 EXPOSE 3000
